@@ -12,7 +12,9 @@ Guarda seguido con **Ctrl + G** como `dashboard-kpis-mineros.pbix`.
    - *Configuración regional* (en **Archivo actual**): Español (Perú).
    - *Carga de datos* (en **Archivo actual**): desmarca **Inteligencia de tiempo automática**
      (usaremos nuestra propia tabla Calendario).
-3. **Vista > Temas > Examinar temas** > elige `powerbi/tema-minero.json`.
+3. **Diseño > Temas (flechita ⌄) > Examinar temas** > elige `powerbi/tema-minero.json`
+   (en versiones antiguas está en **Vista > Temas**). Para tener el archivo en tu PC:
+   en GitHub, botón verde **Code > Download ZIP** y luego **Extraer todo**.
 
 ---
 
