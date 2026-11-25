@@ -1,0 +1,6 @@
+# Power BI: el archivo .pbix puede pesar mucho; súbelo solo si es < 50 MB
+*.pbix.bak
+.~lock*
+__pycache__/
+.venv/
+.env

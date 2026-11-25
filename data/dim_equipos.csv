@@ -1,0 +1,32 @@
+equipo_id,tipo,modelo,flota,capacidad_nominal_tph
+CAM-01,Camión,Komatsu 930E,Acarreo,290
+CAM-02,Camión,Komatsu 930E,Acarreo,290
+CAM-03,Camión,Komatsu 930E,Acarreo,290
+CAM-04,Camión,Komatsu 930E,Acarreo,290
+CAM-05,Camión,Komatsu 930E,Acarreo,290
+CAM-06,Camión,Komatsu 930E,Acarreo,290
+CAM-07,Camión,Komatsu 930E,Acarreo,290
+CAM-08,Camión,Komatsu 930E,Acarreo,290
+CAM-09,Camión,Komatsu 930E,Acarreo,290
+CAM-10,Camión,Komatsu 930E,Acarreo,290
+CAM-11,Camión,Komatsu 930E,Acarreo,290
+CAM-12,Camión,Komatsu 930E,Acarreo,290
+CAM-13,Camión,Komatsu 930E,Acarreo,290
+CAM-14,Camión,Komatsu 930E,Acarreo,290
+CAM-15,Camión,Komatsu 930E,Acarreo,290
+CAM-16,Camión,Komatsu 930E,Acarreo,290
+CAM-17,Camión,Komatsu 930E,Acarreo,290
+CAM-18,Camión,Komatsu 930E,Acarreo,290
+CAM-19,Camión,Komatsu 930E,Acarreo,290
+CAM-20,Camión,Komatsu 930E,Acarreo,290
+CAM-21,Camión,Komatsu 930E,Acarreo,290
+CAM-22,Camión,Komatsu 930E,Acarreo,290
+CAM-23,Camión,Komatsu 930E,Acarreo,290
+CAM-24,Camión,Komatsu 930E,Acarreo,290
+PAL-01,Pala,P&H 4100XPC,Carguío,4200
+PAL-02,Pala,P&H 4100XPC,Carguío,4200
+PAL-03,Pala,P&H 4100XPC,Carguío,4200
+PAL-04,Pala,P&H 4100XPC,Carguío,4200
+PER-01,Perforadora,Epiroc Pit Viper 271,Perforación,180
+PER-02,Perforadora,Epiroc Pit Viper 271,Perforación,180
+PER-03,Perforadora,Epiroc Pit Viper 271,Perforación,180

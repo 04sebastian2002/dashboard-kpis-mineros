@@ -1,0 +1,226 @@
+// MEDIDAS DEL DASHBOARD
+// Primero crea una tabla vacía para guardar las medidas:
+//   Inicio > Especificar datos > nombre "_Medidas" > Cargar.
+// Luego, con la tabla _Medidas seleccionada: Inicio > Nueva medida, y pega
+// cada medida (una a la vez, desde el nombre hasta antes de la siguiente).
+// Las carpetas sugeridas (Display folder) van entre corchetes en cada título.
+
+// =====================================================================
+// [Producción]
+// =====================================================================
+
+Mineral Procesado (t) = SUM ( fact_produccion_diaria[mineral_procesado_t] )
+
+Material Movido (t) = SUM ( fact_produccion_diaria[material_movido_t] )
+
+Desmonte (t) = SUM ( fact_produccion_diaria[desmonte_t] )
+
+Mineral Extraído (t) = SUM ( fact_produccion_diaria[mineral_extraido_t] )
+
+Ratio Desmonte/Mineral = DIVIDE ( [Desmonte (t)], [Mineral Extraído (t)] )
+
+Cu Fino (t) = SUM ( fact_produccion_diaria[cu_fino_t] )
+
+Cu Fino (klb) = [Cu Fino (t)] * 2.20462
+
+// Ley ponderada por tonelaje (no un promedio simple)
+Ley Cu (%) =
+DIVIDE (
+    SUMX ( fact_produccion_diaria, fact_produccion_diaria[mineral_procesado_t] * fact_produccion_diaria[ley_cu_pct] ),
+    [Mineral Procesado (t)]
+)
+
+Recuperación Cu (%) =
+DIVIDE (
+    SUMX (
+        fact_produccion_diaria,
+        fact_produccion_diaria[mineral_procesado_t] * fact_produccion_diaria[ley_cu_pct]
+            * fact_produccion_diaria[recuperacion_cu_pct]
+    ),
+    SUMX ( fact_produccion_diaria, fact_produccion_diaria[mineral_procesado_t] * fact_produccion_diaria[ley_cu_pct] )
+)
+
+Procesamiento Diario Promedio (t/d) =
+DIVIDE ( [Mineral Procesado (t)], DISTINCTCOUNT ( fact_produccion_diaria[fecha] ) )
+
+// =====================================================================
+// [Plan vs Real]
+// =====================================================================
+
+Cu Fino Plan (t) = SUM ( fact_plan_mensual[cu_fino_plan_t] )
+
+Cumplimiento Cu (%) = DIVIDE ( [Cu Fino (t)], [Cu Fino Plan (t)] )
+
+Desviación Cu vs Plan (t) = [Cu Fino (t)] - [Cu Fino Plan (t)]
+
+Mineral Procesado Plan (t) = SUM ( fact_plan_mensual[mineral_procesado_plan_t] )
+
+Cumplimiento Procesamiento (%) = DIVIDE ( [Mineral Procesado (t)], [Mineral Procesado Plan (t)] )
+
+// Color para tarjetas y semáforos: verde >= 100 %, ámbar >= 95 %, rojo < 95 %
+Color Cumplimiento =
+SWITCH (
+    TRUE (),
+    [Cumplimiento Cu (%)] >= 1, "#2E7D32",
+    [Cumplimiento Cu (%)] >= 0.95, "#F9A825",
+    "#C62828"
+)
+
+// =====================================================================
+// [Equipos]  Disponibilidad x Utilización x Rendimiento = OEE
+// =====================================================================
+
+Horas Calendario = SUM ( fact_equipos_diario[horas_calendario] )
+
+Horas Mantenimiento =
+SUM ( fact_equipos_diario[horas_mant_programada] ) + SUM ( fact_equipos_diario[horas_mant_no_programada] )
+
+Horas Disponibles = [Horas Calendario] - [Horas Mantenimiento]
+
+Horas Operativas = SUM ( fact_equipos_diario[horas_operativas] )
+
+Disponibilidad Mecánica (%) = DIVIDE ( [Horas Disponibles], [Horas Calendario] )
+
+Utilización (%) = DIVIDE ( [Horas Operativas], [Horas Disponibles] )
+
+Rendimiento (%) =
+DIVIDE ( SUM ( fact_equipos_diario[produccion_real] ), SUM ( fact_equipos_diario[produccion_nominal] ) )
+
+OEE (%) = [Disponibilidad Mecánica (%)] * [Utilización (%)] * [Rendimiento (%)]
+
+N° Fallas = SUM ( fact_equipos_diario[fallas] )
+
+// Tiempo medio entre fallas y tiempo medio de reparación
+MTBF (h) = DIVIDE ( [Horas Operativas], [N° Fallas] )
+
+MTTR (h) = DIVIDE ( SUM ( fact_equipos_diario[horas_mant_no_programada] ), [N° Fallas] )
+
+// =====================================================================
+// [Mercado]  precios reales de la API del BCRP
+// =====================================================================
+
+Precio Cu (US$/lb) =
+CALCULATE ( AVERAGE ( fact_precios_metales[precio_usd] ), fact_precios_metales[metal] = "Cobre" )
+
+Precio Au (US$/oz) =
+CALCULATE ( AVERAGE ( fact_precios_metales[precio_usd] ), fact_precios_metales[metal] = "Oro" )
+
+Precio Ag (US$/oz) =
+CALCULATE ( AVERAGE ( fact_precios_metales[precio_usd] ), fact_precios_metales[metal] = "Plata" )
+
+Precio Zn (US$/lb) =
+CALCULATE ( AVERAGE ( fact_precios_metales[precio_usd] ), fact_precios_metales[metal] = "Zinc" )
+
+Precio Metal Seleccionado = AVERAGE ( fact_precios_metales[precio_usd] )
+
+Precio Mes Anterior =
+CALCULATE ( [Precio Metal Seleccionado], DATEADD ( Calendario[Fecha], -1, MONTH ) )
+
+Variación Mensual (%) =
+DIVIDE ( [Precio Metal Seleccionado] - [Precio Mes Anterior], [Precio Mes Anterior] )
+
+Precio Año Anterior =
+CALCULATE ( [Precio Metal Seleccionado], SAMEPERIODLASTYEAR ( Calendario[Fecha] ) )
+
+Variación Anual (%) =
+DIVIDE ( [Precio Metal Seleccionado] - [Precio Año Anterior], [Precio Año Anterior] )
+
+// =====================================================================
+// [Costos y finanzas]
+// =====================================================================
+
+Costo Cash (US$) = SUM ( fact_costos_mensual[costo_usd] )
+
+// C1: costo cash por libra de cobre pagable (simplificado: sin créditos de subproductos)
+Costo C1 (US$/lb) = DIVIDE ( [Costo Cash (US$)], [Cu Fino (t)] * 2204.62 )
+
+Costo por t Procesada (US$/t) = DIVIDE ( [Costo Cash (US$)], [Mineral Procesado (t)] )
+
+// Ingreso estimado: cobre fino de cada mes x precio real del cobre de ese mes
+Ingreso Estimado Cu (US$) =
+SUMX (
+    VALUES ( Calendario[Inicio de mes] ),
+    CALCULATE ( [Cu Fino (t)] * 2204.62 * [Precio Cu (US$/lb)] )
+)
+
+Margen Cash (US$) = [Ingreso Estimado Cu (US$)] - [Costo Cash (US$)]
+
+Margen Cash (%) = DIVIDE ( [Margen Cash (US$)], [Ingreso Estimado Cu (US$)] )
+
+Margen por lb (US$/lb) = [Precio Cu (US$/lb)] - [Costo C1 (US$/lb)]
+
+// =====================================================================
+// [Seguridad]  tasas por millón de horas-hombre
+// =====================================================================
+
+Horas Hombre = SUM ( fact_seguridad_mensual[horas_hombre] )
+
+Incidentes Registrables = SUM ( fact_seguridad_mensual[incidentes_registrables] )
+
+Lesiones con Tiempo Perdido = SUM ( fact_seguridad_mensual[lesiones_tiempo_perdido] )
+
+TRIFR = DIVIDE ( [Incidentes Registrables], [Horas Hombre] ) * 1000000
+
+LTIFR = DIVIDE ( [Lesiones con Tiempo Perdido], [Horas Hombre] ) * 1000000
+
+// Índice de severidad: días perdidos por millón de HH
+Índice de Severidad =
+DIVIDE ( SUM ( fact_seguridad_mensual[dias_perdidos] ), [Horas Hombre] ) * 1000000
+
+Cuasi Accidentes = SUM ( fact_seguridad_mensual[cuasi_accidentes] )
+
+// =====================================================================
+// [ESG]
+// =====================================================================
+
+Agua Fresca (m3) = SUM ( fact_ambiental_mensual[agua_fresca_m3] )
+
+Agua Recirculada (m3) = SUM ( fact_ambiental_mensual[agua_recirculada_m3] )
+
+Recirculación de Agua (%) =
+DIVIDE ( [Agua Recirculada (m3)], [Agua Fresca (m3)] + [Agua Recirculada (m3)] )
+
+Intensidad Hídrica (m3/t) = DIVIDE ( [Agua Fresca (m3)], [Mineral Procesado (t)] )
+
+Energía (MWh) = SUM ( fact_ambiental_mensual[energia_mwh] )
+
+Intensidad Energética (kWh/t) = DIVIDE ( [Energía (MWh)] * 1000, [Mineral Procesado (t)] )
+
+Emisiones (tCO2e) = SUM ( fact_ambiental_mensual[emisiones_tco2e] )
+
+Intensidad de Carbono (tCO2e/t Cu) = DIVIDE ( [Emisiones (tCO2e)], [Cu Fino (t)] )
+
+Energía Renovable (%) = AVERAGE ( fact_ambiental_mensual[energia_renovable_pct] ) / 100
+
+// =====================================================================
+// [Perú en el mundo]  API del Banco Mundial
+// =====================================================================
+
+Valor Indicador = AVERAGE ( fact_indicadores_pais[valor] )
+
+Valor Indicador Perú =
+CALCULATE ( [Valor Indicador], fact_indicadores_pais[pais_iso3] = "PER" )
+
+Ranking Perú =
+VAR _Valor = [Valor Indicador Perú]
+RETURN
+    IF (
+        NOT ISBLANK ( _Valor ),
+        COUNTROWS (
+            FILTER (
+                VALUES ( fact_indicadores_pais[pais_iso3] ),
+                [Valor Indicador] > _Valor
+            )
+        ) + 1
+    )
+
+// =====================================================================
+// [Textos dinámicos]  para títulos y tarjetas
+// =====================================================================
+
+Última Actualización Precios =
+"Precios BCRP al " & FORMAT ( MAX ( fact_precios_metales[fecha] ), "mmmm yyyy", "es-PE" )
+
+Título Producción =
+"Producción de cobre fino: " & FORMAT ( [Cu Fino (t)] / 1000, "#,0.0" ) & " kt ("
+    & FORMAT ( [Cumplimiento Cu (%)], "0%" ) & " del plan)"

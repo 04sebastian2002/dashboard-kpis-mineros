@@ -1,0 +1,33 @@
+{
+  "name": "Tema Minero Cobre",
+  "dataColors": ["#B87333", "#1F3A5F", "#D4A017", "#8A9BA8", "#2E7D32", "#C62828", "#5C6BC0", "#6D4C41"],
+  "background": "#FFFFFF",
+  "foreground": "#1E2A35",
+  "tableAccent": "#B87333",
+  "good": "#2E7D32",
+  "neutral": "#F9A825",
+  "bad": "#C62828",
+  "maximum": "#B87333",
+  "center": "#F3E3D3",
+  "minimum": "#FFFFFF",
+  "textClasses": {
+    "title": { "fontFace": "Segoe UI Semibold", "fontSize": 14, "color": "#1E2A35" },
+    "header": { "fontFace": "Segoe UI Semibold", "fontSize": 12, "color": "#1E2A35" },
+    "label": { "fontFace": "Segoe UI", "fontSize": 10, "color": "#4A5A68" },
+    "callout": { "fontFace": "Segoe UI Semibold", "fontSize": 28, "color": "#1F3A5F" }
+  },
+  "visualStyles": {
+    "*": {
+      "*": {
+        "background": [{ "show": true, "color": { "solid": { "color": "#FFFFFF" } }, "transparency": 0 }],
+        "border": [{ "show": true, "color": { "solid": { "color": "#E3E7EB" } }, "radius": 8 }],
+        "dropShadow": [{ "show": false }]
+      }
+    },
+    "page": {
+      "*": {
+        "background": [{ "color": { "solid": { "color": "#F4F6F8" } }, "transparency": 0 }]
+      }
+    }
+  }
+}

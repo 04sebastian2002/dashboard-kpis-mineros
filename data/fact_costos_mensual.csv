@@ -1,0 +1,277 @@
+mes,categoria_costo,costo_usd
+2023-01-01,"Mina (perforación, voladura, carguío, acarreo)",13703634.79
+2023-01-01,Planta concentradora,13478588.95
+2023-01-01,Energía,5364176.02
+2023-01-01,Mantenimiento,4707953.2
+2023-01-01,Servicios y G&A,5973124.08
+2023-01-01,Transporte y puerto (concentrado),2267028.08
+2023-02-01,"Mina (perforación, voladura, carguío, acarreo)",13948170.52
+2023-02-01,Planta concentradora,13231021.19
+2023-02-01,Energía,4982882.09
+2023-02-01,Mantenimiento,4320685.18
+2023-02-01,Servicios y G&A,6610881.62
+2023-02-01,Transporte y puerto (concentrado),2224700.99
+2023-03-01,"Mina (perforación, voladura, carguío, acarreo)",14425335.93
+2023-03-01,Planta concentradora,14034081.49
+2023-03-01,Energía,5388633.03
+2023-03-01,Mantenimiento,4809416.26
+2023-03-01,Servicios y G&A,6815642.96
+2023-03-01,Transporte y puerto (concentrado),2499237.36
+2023-04-01,"Mina (perforación, voladura, carguío, acarreo)",14698440.25
+2023-04-01,Planta concentradora,14443819.72
+2023-04-01,Energía,5484076.01
+2023-04-01,Mantenimiento,4650245.01
+2023-04-01,Servicios y G&A,6602637.86
+2023-04-01,Transporte y puerto (concentrado),2579860.99
+2023-05-01,"Mina (perforación, voladura, carguío, acarreo)",15169444.13
+2023-05-01,Planta concentradora,15285865.44
+2023-05-01,Energía,6136971.94
+2023-05-01,Mantenimiento,5016151.05
+2023-05-01,Servicios y G&A,6832942.6
+2023-05-01,Transporte y puerto (concentrado),2452662.35
+2023-06-01,"Mina (perforación, voladura, carguío, acarreo)",16790507.05
+2023-06-01,Planta concentradora,15281517.74
+2023-06-01,Energía,5842637.38
+2023-06-01,Mantenimiento,5145537.78
+2023-06-01,Servicios y G&A,6252793.42
+2023-06-01,Transporte y puerto (concentrado),2594361.41
+2023-07-01,"Mina (perforación, voladura, carguío, acarreo)",14430913.52
+2023-07-01,Planta concentradora,14041052.43
+2023-07-01,Energía,5909766.74
+2023-07-01,Mantenimiento,5008781.64
+2023-07-01,Servicios y G&A,6215720.09
+2023-07-01,Transporte y puerto (concentrado),2555052.49
+2023-08-01,"Mina (perforación, voladura, carguío, acarreo)",15776518.85
+2023-08-01,Planta concentradora,15023448.2
+2023-08-01,Energía,6098093.72
+2023-08-01,Mantenimiento,5319969.12
+2023-08-01,Servicios y G&A,7118710.06
+2023-08-01,Transporte y puerto (concentrado),2780583.8
+2023-09-01,"Mina (perforación, voladura, carguío, acarreo)",15362951.89
+2023-09-01,Planta concentradora,15173541.46
+2023-09-01,Energía,5570982.62
+2023-09-01,Mantenimiento,5036421.0
+2023-09-01,Servicios y G&A,6508054.28
+2023-09-01,Transporte y puerto (concentrado),2543318.55
+2023-10-01,"Mina (perforación, voladura, carguío, acarreo)",17192412.42
+2023-10-01,Planta concentradora,15797713.07
+2023-10-01,Energía,6099049.31
+2023-10-01,Mantenimiento,5254213.21
+2023-10-01,Servicios y G&A,6569352.93
+2023-10-01,Transporte y puerto (concentrado),2779675.77
+2023-11-01,"Mina (perforación, voladura, carguío, acarreo)",16047867.24
+2023-11-01,Planta concentradora,15791638.61
+2023-11-01,Energía,5945524.8
+2023-11-01,Mantenimiento,5622464.36
+2023-11-01,Servicios y G&A,6760758.82
+2023-11-01,Transporte y puerto (concentrado),2581805.96
+2023-12-01,"Mina (perforación, voladura, carguío, acarreo)",15311336.11
+2023-12-01,Planta concentradora,15232217.62
+2023-12-01,Energía,5663661.49
+2023-12-01,Mantenimiento,5145718.05
+2023-12-01,Servicios y G&A,6205893.36
+2023-12-01,Transporte y puerto (concentrado),2782337.9
+2024-01-01,"Mina (perforación, voladura, carguío, acarreo)",16422702.97
+2024-01-01,Planta concentradora,14506137.75
+2024-01-01,Energía,5259578.47
+2024-01-01,Mantenimiento,4710250.36
+2024-01-01,Servicios y G&A,6828779.52
+2024-01-01,Transporte y puerto (concentrado),2375960.55
+2024-02-01,"Mina (perforación, voladura, carguío, acarreo)",14602863.95
+2024-02-01,Planta concentradora,13388028.23
+2024-02-01,Energía,5054936.46
+2024-02-01,Mantenimiento,4523195.73
+2024-02-01,Servicios y G&A,6654359.41
+2024-02-01,Transporte y puerto (concentrado),2554821.48
+2024-03-01,"Mina (perforación, voladura, carguío, acarreo)",14627307.6
+2024-03-01,Planta concentradora,15303101.2
+2024-03-01,Energía,5823795.63
+2024-03-01,Mantenimiento,5252080.24
+2024-03-01,Servicios y G&A,6751115.12
+2024-03-01,Transporte y puerto (concentrado),2594008.7
+2024-04-01,"Mina (perforación, voladura, carguío, acarreo)",15593954.21
+2024-04-01,Planta concentradora,15669263.2
+2024-04-01,Energía,5143952.06
+2024-04-01,Mantenimiento,5317593.48
+2024-04-01,Servicios y G&A,7186576.12
+2024-04-01,Transporte y puerto (concentrado),2903247.4
+2024-05-01,"Mina (perforación, voladura, carguío, acarreo)",17166039.52
+2024-05-01,Planta concentradora,15685600.73
+2024-05-01,Energía,5988321.08
+2024-05-01,Mantenimiento,5379333.96
+2024-05-01,Servicios y G&A,6711552.81
+2024-05-01,Transporte y puerto (concentrado),2761947.15
+2024-06-01,"Mina (perforación, voladura, carguío, acarreo)",14436993.16
+2024-06-01,Planta concentradora,16359643.33
+2024-06-01,Energía,6108629.17
+2024-06-01,Mantenimiento,5031578.53
+2024-06-01,Servicios y G&A,6138052.2
+2024-06-01,Transporte y puerto (concentrado),2845107.25
+2024-07-01,"Mina (perforación, voladura, carguío, acarreo)",15847357.96
+2024-07-01,Planta concentradora,14675169.01
+2024-07-01,Energía,5672414.64
+2024-07-01,Mantenimiento,5253358.49
+2024-07-01,Servicios y G&A,6632650.77
+2024-07-01,Transporte y puerto (concentrado),2746396.88
+2024-08-01,"Mina (perforación, voladura, carguío, acarreo)",16696646.57
+2024-08-01,Planta concentradora,17084562.82
+2024-08-01,Energía,6797901.61
+2024-08-01,Mantenimiento,5622058.93
+2024-08-01,Servicios y G&A,6876216.19
+2024-08-01,Transporte y puerto (concentrado),2964648.58
+2024-09-01,"Mina (perforación, voladura, carguío, acarreo)",16532669.17
+2024-09-01,Planta concentradora,16855603.48
+2024-09-01,Energía,6087992.7
+2024-09-01,Mantenimiento,5381767.68
+2024-09-01,Servicios y G&A,7347915.45
+2024-09-01,Transporte y puerto (concentrado),2709796.03
+2024-10-01,"Mina (perforación, voladura, carguío, acarreo)",16784059.34
+2024-10-01,Planta concentradora,16156706.53
+2024-10-01,Energía,5989239.03
+2024-10-01,Mantenimiento,5393233.92
+2024-10-01,Servicios y G&A,6775736.3
+2024-10-01,Transporte y puerto (concentrado),2786775.33
+2024-11-01,"Mina (perforación, voladura, carguío, acarreo)",16687267.23
+2024-11-01,Planta concentradora,15500739.92
+2024-11-01,Energía,6454037.08
+2024-11-01,Mantenimiento,5694759.36
+2024-11-01,Servicios y G&A,7043804.12
+2024-11-01,Transporte y puerto (concentrado),2745313.78
+2024-12-01,"Mina (perforación, voladura, carguío, acarreo)",16956426.53
+2024-12-01,Planta concentradora,14529845.53
+2024-12-01,Energía,5697806.36
+2024-12-01,Mantenimiento,5031630.17
+2024-12-01,Servicios y G&A,6924773.98
+2024-12-01,Transporte y puerto (concentrado),2759142.9
+2025-01-01,"Mina (perforación, voladura, carguío, acarreo)",14659089.8
+2025-01-01,Planta concentradora,15587862.17
+2025-01-01,Energía,6048295.71
+2025-01-01,Mantenimiento,5220329.77
+2025-01-01,Servicios y G&A,6052237.5
+2025-01-01,Transporte y puerto (concentrado),2616609.69
+2025-02-01,"Mina (perforación, voladura, carguío, acarreo)",14570699.02
+2025-02-01,Planta concentradora,13839700.73
+2025-02-01,Energía,5428833.98
+2025-02-01,Mantenimiento,5086019.35
+2025-02-01,Servicios y G&A,7013612.77
+2025-02-01,Transporte y puerto (concentrado),2433224.4
+2025-03-01,"Mina (perforación, voladura, carguío, acarreo)",15603955.26
+2025-03-01,Planta concentradora,16043163.28
+2025-03-01,Energía,5860254.87
+2025-03-01,Mantenimiento,4960841.81
+2025-03-01,Servicios y G&A,7245054.3
+2025-03-01,Transporte y puerto (concentrado),2757155.42
+2025-04-01,"Mina (perforación, voladura, carguío, acarreo)",16585572.17
+2025-04-01,Planta concentradora,15872795.03
+2025-04-01,Energía,6318893.33
+2025-04-01,Mantenimiento,5638520.28
+2025-04-01,Servicios y G&A,7116397.71
+2025-04-01,Transporte y puerto (concentrado),2929320.44
+2025-05-01,"Mina (perforación, voladura, carguío, acarreo)",14858478.47
+2025-05-01,Planta concentradora,16924032.78
+2025-05-01,Energía,6582830.06
+2025-05-01,Mantenimiento,5541355.16
+2025-05-01,Servicios y G&A,6792693.73
+2025-05-01,Transporte y puerto (concentrado),2929706.32
+2025-06-01,"Mina (perforación, voladura, carguío, acarreo)",17532626.73
+2025-06-01,Planta concentradora,15691410.44
+2025-06-01,Energía,6071112.31
+2025-06-01,Mantenimiento,5563397.92
+2025-06-01,Servicios y G&A,7021081.14
+2025-06-01,Transporte y puerto (concentrado),2961006.45
+2025-07-01,"Mina (perforación, voladura, carguío, acarreo)",15985020.05
+2025-07-01,Planta concentradora,16890162.86
+2025-07-01,Energía,6740566.08
+2025-07-01,Mantenimiento,5648626.23
+2025-07-01,Servicios y G&A,6584249.93
+2025-07-01,Transporte y puerto (concentrado),2686879.6
+2025-08-01,"Mina (perforación, voladura, carguío, acarreo)",15857960.85
+2025-08-01,Planta concentradora,16105554.88
+2025-08-01,Energía,6418425.26
+2025-08-01,Mantenimiento,6098021.27
+2025-08-01,Servicios y G&A,6781884.24
+2025-08-01,Transporte y puerto (concentrado),2965693.51
+2025-09-01,"Mina (perforación, voladura, carguío, acarreo)",17425660.15
+2025-09-01,Planta concentradora,16620937.56
+2025-09-01,Energía,6282483.55
+2025-09-01,Mantenimiento,5396274.92
+2025-09-01,Servicios y G&A,6813657.98
+2025-09-01,Transporte y puerto (concentrado),2853483.47
+2025-10-01,"Mina (perforación, voladura, carguío, acarreo)",17496542.5
+2025-10-01,Planta concentradora,17027081.4
+2025-10-01,Energía,6729871.6
+2025-10-01,Mantenimiento,5661570.86
+2025-10-01,Servicios y G&A,6876945.94
+2025-10-01,Transporte y puerto (concentrado),2793160.85
+2025-11-01,"Mina (perforación, voladura, carguío, acarreo)",17809765.94
+2025-11-01,Planta concentradora,16762084.75
+2025-11-01,Energía,6420261.03
+2025-11-01,Mantenimiento,5432997.58
+2025-11-01,Servicios y G&A,6977541.43
+2025-11-01,Transporte y puerto (concentrado),3020116.7
+2025-12-01,"Mina (perforación, voladura, carguío, acarreo)",16259356.71
+2025-12-01,Planta concentradora,17490070.08
+2025-12-01,Energía,6460814.22
+2025-12-01,Mantenimiento,5594136.26
+2025-12-01,Servicios y G&A,7285906.72
+2025-12-01,Transporte y puerto (concentrado),2709933.73
+2026-01-01,"Mina (perforación, voladura, carguío, acarreo)",15683594.99
+2026-01-01,Planta concentradora,16100201.08
+2026-01-01,Energía,6118992.75
+2026-01-01,Mantenimiento,5505446.82
+2026-01-01,Servicios y G&A,6844788.65
+2026-01-01,Transporte y puerto (concentrado),2849703.56
+2026-02-01,"Mina (perforación, voladura, carguío, acarreo)",15034026.1
+2026-02-01,Planta concentradora,14468018.94
+2026-02-01,Energía,5753696.37
+2026-02-01,Mantenimiento,5223334.43
+2026-02-01,Servicios y G&A,7067386.82
+2026-02-01,Transporte y puerto (concentrado),2552459.41
+2026-03-01,"Mina (perforación, voladura, carguío, acarreo)",15750520.16
+2026-03-01,Planta concentradora,15291358.51
+2026-03-01,Energía,6152290.2
+2026-03-01,Mantenimiento,5631057.86
+2026-03-01,Servicios y G&A,7072235.32
+2026-03-01,Transporte y puerto (concentrado),2760033.59
+2026-04-01,"Mina (perforación, voladura, carguío, acarreo)",16681211.4
+2026-04-01,Planta concentradora,17444648.05
+2026-04-01,Energía,6523229.03
+2026-04-01,Mantenimiento,5550213.75
+2026-04-01,Servicios y G&A,6928798.9
+2026-04-01,Transporte y puerto (concentrado),3061818.56
+2026-05-01,"Mina (perforación, voladura, carguío, acarreo)",17947524.7
+2026-05-01,Planta concentradora,18566141.3
+2026-05-01,Energía,6580336.24
+2026-05-01,Mantenimiento,6316809.84
+2026-05-01,Servicios y G&A,6558006.64
+2026-05-01,Transporte y puerto (concentrado),2971642.63
+2026-06-01,"Mina (perforación, voladura, carguío, acarreo)",17391039.35
+2026-06-01,Planta concentradora,17368643.87
+2026-06-01,Energía,6365710.34
+2026-06-01,Mantenimiento,5968444.79
+2026-06-01,Servicios y G&A,6985771.96
+2026-06-01,Transporte y puerto (concentrado),3372714.54
+2026-07-01,"Mina (perforación, voladura, carguío, acarreo)",16094297.04
+2026-07-01,Planta concentradora,15929865.83
+2026-07-01,Energía,6538181.67
+2026-07-01,Mantenimiento,5377157.99
+2026-07-01,Servicios y G&A,7315235.02
+2026-07-01,Transporte y puerto (concentrado),2862515.13
+2026-08-01,"Mina (perforación, voladura, carguío, acarreo)",17301898.43
+2026-08-01,Planta concentradora,17641899.7
+2026-08-01,Energía,6830903.93
+2026-08-01,Mantenimiento,6010879.17
+2026-08-01,Servicios y G&A,6533071.46
+2026-08-01,Transporte y puerto (concentrado),3025290.86
+2026-09-01,"Mina (perforación, voladura, carguío, acarreo)",16790992.27
+2026-09-01,Planta concentradora,17023598.17
+2026-09-01,Energía,7029556.6
+2026-09-01,Mantenimiento,5452194.56
+2026-09-01,Servicios y G&A,6805449.84
+2026-09-01,Transporte y puerto (concentrado),3094859.79
+2026-10-01,"Mina (perforación, voladura, carguío, acarreo)",18087144.24
+2026-10-01,Planta concentradora,17913264.32
+2026-10-01,Energía,6988111.94
+2026-10-01,Mantenimiento,5619146.8
+2026-10-01,Servicios y G&A,7000503.65
+2026-10-01,Transporte y puerto (concentrado),3029880.65
