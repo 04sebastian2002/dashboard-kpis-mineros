@@ -163,7 +163,7 @@ título y los filtros (segmentaciones) de **Año** y **Mes**.
 - **Líneas**: `Intensidad Energética (kWh/t)` por mes.
 
 ### Página 7 · Perú en el mundo (API Banco Mundial)
-- Segmentaciones: `indicador` (selección única) y `anio`.
+- Segmentaciones: `nombre_corto` (selección única) y `anio`.
 - **Barras horizontales**: `pais` × `Valor Indicador` (ordenado de mayor a menor).
 - **Líneas**: eje `anio`, valor `Valor Indicador`, leyenda `pais`.
 - Tarjetas: `Valor Indicador Perú` y `Ranking Perú`.
