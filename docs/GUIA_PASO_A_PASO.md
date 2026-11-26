@@ -110,6 +110,10 @@ Es un **modelo estrella**: una buena palabra para mencionar en entrevistas.
    - Haz clic en el enlace **"Actualizar modelo: agregar 64 medidas nuevas"** que aparece sobre `DEFINE`.
    - (Opcional) **Ejecutar** muestra una prueba con 4 KPIs.
 
+   **Si no aparece ese enlace (algunas versiones):** usa la **Vista TMDL** (5.º ícono):
+   pega todo `powerbi/dax/04_medidas.tmdl` > **Aplicar**. Crea la tabla `_Medidas` con las
+   64 medidas, su formato y sus carpetas.
+
    **Opción manual:** selecciona `_Medidas` > **Inicio > Nueva medida** > pega una medida de
    `powerbi/dax/02_medidas.dax` > Enter. Repite con cada una.
 3. Formatos (Herramientas de medición):

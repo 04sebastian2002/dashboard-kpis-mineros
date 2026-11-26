@@ -1,0 +1,268 @@
+createOrReplace
+
+	table _Medidas
+
+		measure 'Mineral Procesado (t)' = SUM ( fact_produccion_diaria[mineral_procesado_t] )
+			formatString: #,0
+			displayFolder: Producción
+
+		measure 'Material Movido (t)' = SUM ( fact_produccion_diaria[material_movido_t] )
+			formatString: #,0
+			displayFolder: Producción
+
+		measure 'Desmonte (t)' = SUM ( fact_produccion_diaria[desmonte_t] )
+			formatString: #,0
+			displayFolder: Producción
+
+		measure 'Mineral Extraído (t)' = SUM ( fact_produccion_diaria[mineral_extraido_t] )
+			formatString: #,0
+			displayFolder: Producción
+
+		measure 'Ratio Desmonte/Mineral' = DIVIDE ( [Desmonte (t)], [Mineral Extraído (t)] )
+			formatString: #,0.00
+			displayFolder: Producción
+
+		measure 'Cu Fino (t)' = SUM ( fact_produccion_diaria[cu_fino_t] )
+			formatString: #,0
+			displayFolder: Producción
+
+		measure 'Cu Fino (klb)' = [Cu Fino (t)] * 2.20462
+			formatString: #,0
+			displayFolder: Producción
+
+		measure 'Ley Cu (%)' = DIVIDE ( SUMX ( fact_produccion_diaria, fact_produccion_diaria[mineral_procesado_t] * fact_produccion_diaria[ley_cu_pct] ), [Mineral Procesado (t)] ) / 100
+			formatString: 0.00%
+			displayFolder: Producción
+
+		measure 'Recuperación Cu (%)' = DIVIDE ( SUMX ( fact_produccion_diaria, fact_produccion_diaria[mineral_procesado_t] * fact_produccion_diaria[ley_cu_pct] * fact_produccion_diaria[recuperacion_cu_pct] ), SUMX ( fact_produccion_diaria, fact_produccion_diaria[mineral_procesado_t] * fact_produccion_diaria[ley_cu_pct] ) ) / 100
+			formatString: 0.0%
+			displayFolder: Producción
+
+		measure 'Procesamiento Diario Promedio (t/d)' = DIVIDE ( [Mineral Procesado (t)], DISTINCTCOUNT ( fact_produccion_diaria[fecha] ) )
+			formatString: #,0
+			displayFolder: Producción
+
+		measure 'Cu Fino Plan (t)' = SUM ( fact_plan_mensual[cu_fino_plan_t] )
+			formatString: #,0
+			displayFolder: Plan vs Real
+
+		measure 'Cumplimiento Cu (%)' = DIVIDE ( [Cu Fino (t)], [Cu Fino Plan (t)] )
+			formatString: 0.0%
+			displayFolder: Plan vs Real
+
+		measure 'Desviación Cu vs Plan (t)' = [Cu Fino (t)] - [Cu Fino Plan (t)]
+			formatString: #,0
+			displayFolder: Plan vs Real
+
+		measure 'Mineral Procesado Plan (t)' = SUM ( fact_plan_mensual[mineral_procesado_plan_t] )
+			formatString: #,0
+			displayFolder: Plan vs Real
+
+		measure 'Cumplimiento Procesamiento (%)' = DIVIDE ( [Mineral Procesado (t)], [Mineral Procesado Plan (t)] )
+			formatString: 0.0%
+			displayFolder: Plan vs Real
+
+		measure 'Color Cumplimiento' = SWITCH ( TRUE (), [Cumplimiento Cu (%)] >= 1, "#2E7D32", [Cumplimiento Cu (%)] >= 0.95, "#F9A825", "#C62828" )
+			displayFolder: Plan vs Real
+
+		measure 'Horas Calendario' = SUM ( fact_equipos_diario[horas_calendario] )
+			formatString: #,0
+			displayFolder: Equipos
+
+		measure 'Horas Mantenimiento' = SUM ( fact_equipos_diario[horas_mant_programada] ) + SUM ( fact_equipos_diario[horas_mant_no_programada] )
+			formatString: #,0
+			displayFolder: Equipos
+
+		measure 'Horas Disponibles' = [Horas Calendario] - [Horas Mantenimiento]
+			formatString: #,0
+			displayFolder: Equipos
+
+		measure 'Horas Operativas' = SUM ( fact_equipos_diario[horas_operativas] )
+			formatString: #,0
+			displayFolder: Equipos
+
+		measure 'Disponibilidad Mecánica (%)' = DIVIDE ( [Horas Disponibles], [Horas Calendario] )
+			formatString: 0.0%
+			displayFolder: Equipos
+
+		measure 'Utilización (%)' = DIVIDE ( [Horas Operativas], [Horas Disponibles] )
+			formatString: 0.0%
+			displayFolder: Equipos
+
+		measure 'Rendimiento (%)' = DIVIDE ( SUM ( fact_equipos_diario[produccion_real] ), SUM ( fact_equipos_diario[produccion_nominal] ) )
+			formatString: 0.0%
+			displayFolder: Equipos
+
+		measure 'OEE (%)' = [Disponibilidad Mecánica (%)] * [Utilización (%)] * [Rendimiento (%)]
+			formatString: 0.0%
+			displayFolder: Equipos
+
+		measure 'N° Fallas' = SUM ( fact_equipos_diario[fallas] )
+			formatString: 0
+			displayFolder: Equipos
+
+		measure 'MTBF (h)' = DIVIDE ( [Horas Operativas], [N° Fallas] )
+			formatString: #,0.00
+			displayFolder: Equipos
+
+		measure 'MTTR (h)' = DIVIDE ( SUM ( fact_equipos_diario[horas_mant_no_programada] ), [N° Fallas] )
+			formatString: #,0.00
+			displayFolder: Equipos
+
+		measure 'Precio Cu (US$/lb)' = CALCULATE ( AVERAGE ( fact_precios_metales[precio_usd] ), fact_precios_metales[metal] = "Cobre" )
+			formatString: #,0.00
+			displayFolder: Mercado
+
+		measure 'Precio Au (US$/oz)' = CALCULATE ( AVERAGE ( fact_precios_metales[precio_usd] ), fact_precios_metales[metal] = "Oro" )
+			formatString: #,0.00
+			displayFolder: Mercado
+
+		measure 'Precio Ag (US$/oz)' = CALCULATE ( AVERAGE ( fact_precios_metales[precio_usd] ), fact_precios_metales[metal] = "Plata" )
+			formatString: #,0.00
+			displayFolder: Mercado
+
+		measure 'Precio Zn (US$/lb)' = CALCULATE ( AVERAGE ( fact_precios_metales[precio_usd] ), fact_precios_metales[metal] = "Zinc" )
+			formatString: #,0.00
+			displayFolder: Mercado
+
+		measure 'Precio Metal Seleccionado' = AVERAGE ( fact_precios_metales[precio_usd] )
+			formatString: #,0.00
+			displayFolder: Mercado
+
+		measure 'Precio Mes Anterior' = CALCULATE ( [Precio Metal Seleccionado], DATEADD ( Calendario[Fecha], -1, MONTH ) )
+			formatString: #,0.00
+			displayFolder: Mercado
+
+		measure 'Variación Mensual (%)' = DIVIDE ( [Precio Metal Seleccionado] - [Precio Mes Anterior], [Precio Mes Anterior] )
+			formatString: 0.0%
+			displayFolder: Mercado
+
+		measure 'Precio Año Anterior' = CALCULATE ( [Precio Metal Seleccionado], SAMEPERIODLASTYEAR ( Calendario[Fecha] ) )
+			formatString: #,0.00
+			displayFolder: Mercado
+
+		measure 'Variación Anual (%)' = DIVIDE ( [Precio Metal Seleccionado] - [Precio Año Anterior], [Precio Año Anterior] )
+			formatString: 0.0%
+			displayFolder: Mercado
+
+		measure 'Costo Cash (US$)' = SUM ( fact_costos_mensual[costo_usd] )
+			formatString: #,0
+			displayFolder: Costos y finanzas
+
+		measure 'Costo C1 (US$/lb)' = DIVIDE ( [Costo Cash (US$)], [Cu Fino (t)] * 2204.62 )
+			formatString: #,0.00
+			displayFolder: Costos y finanzas
+
+		measure 'Costo por t Procesada (US$/t)' = DIVIDE ( [Costo Cash (US$)], [Mineral Procesado (t)] )
+			formatString: #,0.00
+			displayFolder: Costos y finanzas
+
+		measure 'Ingreso Estimado Cu (US$)' = SUMX ( VALUES ( Calendario[Inicio de mes] ), CALCULATE ( [Cu Fino (t)] * 2204.62 * [Precio Cu (US$/lb)] ) )
+			formatString: #,0
+			displayFolder: Costos y finanzas
+
+		measure 'Margen Cash (US$)' = [Ingreso Estimado Cu (US$)] - [Costo Cash (US$)]
+			formatString: #,0
+			displayFolder: Costos y finanzas
+
+		measure 'Margen Cash (%)' = DIVIDE ( [Margen Cash (US$)], [Ingreso Estimado Cu (US$)] )
+			formatString: 0.0%
+			displayFolder: Costos y finanzas
+
+		measure 'Margen por lb (US$/lb)' = [Precio Cu (US$/lb)] - [Costo C1 (US$/lb)]
+			formatString: #,0.00
+			displayFolder: Costos y finanzas
+
+		measure 'Horas Hombre' = SUM ( fact_seguridad_mensual[horas_hombre] )
+			formatString: #,0
+			displayFolder: Seguridad
+
+		measure 'Incidentes Registrables' = SUM ( fact_seguridad_mensual[incidentes_registrables] )
+			formatString: 0
+			displayFolder: Seguridad
+
+		measure 'Lesiones con Tiempo Perdido' = SUM ( fact_seguridad_mensual[lesiones_tiempo_perdido] )
+			formatString: 0
+			displayFolder: Seguridad
+
+		measure 'TRIFR' = DIVIDE ( [Incidentes Registrables], [Horas Hombre] ) * 1000000
+			formatString: #,0.00
+			displayFolder: Seguridad
+
+		measure 'LTIFR' = DIVIDE ( [Lesiones con Tiempo Perdido], [Horas Hombre] ) * 1000000
+			formatString: #,0.00
+			displayFolder: Seguridad
+
+		measure 'Índice de Severidad' = DIVIDE ( SUM ( fact_seguridad_mensual[dias_perdidos] ), [Horas Hombre] ) * 1000000
+			formatString: #,0
+			displayFolder: Seguridad
+
+		measure 'Cuasi Accidentes' = SUM ( fact_seguridad_mensual[cuasi_accidentes] )
+			formatString: 0
+			displayFolder: Seguridad
+
+		measure 'Agua Fresca (m3)' = SUM ( fact_ambiental_mensual[agua_fresca_m3] )
+			formatString: #,0
+			displayFolder: ESG
+
+		measure 'Agua Recirculada (m3)' = SUM ( fact_ambiental_mensual[agua_recirculada_m3] )
+			formatString: #,0
+			displayFolder: ESG
+
+		measure 'Recirculación de Agua (%)' = DIVIDE ( [Agua Recirculada (m3)], [Agua Fresca (m3)] + [Agua Recirculada (m3)] )
+			formatString: 0.0%
+			displayFolder: ESG
+
+		measure 'Intensidad Hídrica (m3/t)' = DIVIDE ( [Agua Fresca (m3)], [Mineral Procesado (t)] )
+			formatString: #,0.00
+			displayFolder: ESG
+
+		measure 'Energía (MWh)' = SUM ( fact_ambiental_mensual[energia_mwh] )
+			formatString: #,0
+			displayFolder: ESG
+
+		measure 'Intensidad Energética (kWh/t)' = DIVIDE ( [Energía (MWh)] * 1000, [Mineral Procesado (t)] )
+			formatString: #,0
+			displayFolder: ESG
+
+		measure 'Emisiones (tCO2e)' = SUM ( fact_ambiental_mensual[emisiones_tco2e] )
+			formatString: #,0
+			displayFolder: ESG
+
+		measure 'Intensidad de Carbono (tCO2e/t Cu)' = DIVIDE ( [Emisiones (tCO2e)], [Cu Fino (t)] )
+			formatString: #,0.00
+			displayFolder: ESG
+
+		measure 'Energía Renovable (%)' = AVERAGE ( fact_ambiental_mensual[energia_renovable_pct] ) / 100
+			formatString: 0.0%
+			displayFolder: ESG
+
+		measure 'Valor Indicador' = AVERAGE ( fact_indicadores_pais[valor] )
+			formatString: #,0.00
+			displayFolder: Perú en el mundo
+
+		measure 'Valor Indicador Perú' = CALCULATE ( [Valor Indicador], fact_indicadores_pais[pais_iso3] = "PER" )
+			formatString: #,0.00
+			displayFolder: Perú en el mundo
+
+		measure 'Ranking Perú' = VAR _Valor = [Valor Indicador Perú] RETURN IF ( NOT ISBLANK ( _Valor ), COUNTROWS ( FILTER ( VALUES ( fact_indicadores_pais[pais_iso3] ), [Valor Indicador] > _Valor ) ) + 1 )
+			formatString: 0
+			displayFolder: Perú en el mundo
+
+		measure 'Última Actualización Precios' = "Precios BCRP al " & FORMAT ( MAX ( fact_precios_metales[fecha] ), "mmmm yyyy", "es-PE" )
+			displayFolder: Textos dinámicos
+
+		measure 'Título Producción' = "Producción de cobre fino: " & FORMAT ( [Cu Fino (t)] / 1000, "#,0.0" ) & " kt (" & FORMAT ( [Cumplimiento Cu (%)], "0%" ) & " del plan)"
+			displayFolder: Textos dinámicos
+
+		column Valor
+			dataType: int64
+			isHidden
+			formatString: 0
+			summarizeBy: none
+			isNameInferred
+			sourceColumn: [Valor]
+
+		partition _Medidas = calculated
+			mode: import
+			source = ROW ( "Valor", 0 )
