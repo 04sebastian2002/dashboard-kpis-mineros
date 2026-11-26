@@ -23,12 +23,14 @@ Cu Fino (t) = SUM ( fact_produccion_diaria[cu_fino_t] )
 
 Cu Fino (klb) = [Cu Fino (t)] * 2.20462
 
-// Ley ponderada por tonelaje (no un promedio simple)
+// Ley ponderada por tonelaje (no un promedio simple).
+// Se divide entre 100 porque el CSV trae puntos porcentuales (0.54 = 0,54 %);
+// así el formato Porcentaje de Power BI la muestra bien.
 Ley Cu (%) =
 DIVIDE (
     SUMX ( fact_produccion_diaria, fact_produccion_diaria[mineral_procesado_t] * fact_produccion_diaria[ley_cu_pct] ),
     [Mineral Procesado (t)]
-)
+) / 100
 
 Recuperación Cu (%) =
 DIVIDE (
@@ -38,7 +40,7 @@ DIVIDE (
             * fact_produccion_diaria[recuperacion_cu_pct]
     ),
     SUMX ( fact_produccion_diaria, fact_produccion_diaria[mineral_procesado_t] * fact_produccion_diaria[ley_cu_pct] )
-)
+) / 100
 
 Procesamiento Diario Promedio (t/d) =
 DIVIDE ( [Mineral Procesado (t)], DISTINCTCOUNT ( fact_produccion_diaria[fecha] ) )

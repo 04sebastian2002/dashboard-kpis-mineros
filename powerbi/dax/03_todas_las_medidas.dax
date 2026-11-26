@@ -1,0 +1,178 @@
+// TODAS LAS MEDIDAS DE UNA VEZ (64 medidas). Archivo generado por scripts/generar_define_dax.py
+// 1. Crea la tabla _Medidas (Inicio > Introducir datos > nombre _Medidas > Cargar).
+// 2. Abre la Vista de consultas DAX (4.º ícono de la barra izquierda).
+// 3. Pega TODO este archivo y haz clic en el enlace que aparece arriba de DEFINE:
+//    "Actualizar modelo: agregar 64 medidas nuevas".
+// 4. (Opcional) Clic en Ejecutar para ver una prueba con 4 KPIs.
+
+DEFINE
+    MEASURE _Medidas[Mineral Procesado (t)] = SUM ( fact_produccion_diaria[mineral_procesado_t] )
+
+    MEASURE _Medidas[Material Movido (t)] = SUM ( fact_produccion_diaria[material_movido_t] )
+
+    MEASURE _Medidas[Desmonte (t)] = SUM ( fact_produccion_diaria[desmonte_t] )
+
+    MEASURE _Medidas[Mineral Extraído (t)] = SUM ( fact_produccion_diaria[mineral_extraido_t] )
+
+    MEASURE _Medidas[Ratio Desmonte/Mineral] = DIVIDE ( [Desmonte (t)], [Mineral Extraído (t)] )
+
+    MEASURE _Medidas[Cu Fino (t)] = SUM ( fact_produccion_diaria[cu_fino_t] )
+
+    MEASURE _Medidas[Cu Fino (klb)] = [Cu Fino (t)] * 2.20462
+
+    MEASURE _Medidas[Ley Cu (%)] =
+        DIVIDE (
+            SUMX ( fact_produccion_diaria, fact_produccion_diaria[mineral_procesado_t] * fact_produccion_diaria[ley_cu_pct] ),
+            [Mineral Procesado (t)]
+        ) / 100
+
+    MEASURE _Medidas[Recuperación Cu (%)] =
+        DIVIDE (
+            SUMX (
+                fact_produccion_diaria,
+                fact_produccion_diaria[mineral_procesado_t] * fact_produccion_diaria[ley_cu_pct]
+                    * fact_produccion_diaria[recuperacion_cu_pct]
+            ),
+            SUMX ( fact_produccion_diaria, fact_produccion_diaria[mineral_procesado_t] * fact_produccion_diaria[ley_cu_pct] )
+        ) / 100
+
+    MEASURE _Medidas[Procesamiento Diario Promedio (t/d)] = DIVIDE ( [Mineral Procesado (t)], DISTINCTCOUNT ( fact_produccion_diaria[fecha] ) )
+
+    MEASURE _Medidas[Cu Fino Plan (t)] = SUM ( fact_plan_mensual[cu_fino_plan_t] )
+
+    MEASURE _Medidas[Cumplimiento Cu (%)] = DIVIDE ( [Cu Fino (t)], [Cu Fino Plan (t)] )
+
+    MEASURE _Medidas[Desviación Cu vs Plan (t)] = [Cu Fino (t)] - [Cu Fino Plan (t)]
+
+    MEASURE _Medidas[Mineral Procesado Plan (t)] = SUM ( fact_plan_mensual[mineral_procesado_plan_t] )
+
+    MEASURE _Medidas[Cumplimiento Procesamiento (%)] = DIVIDE ( [Mineral Procesado (t)], [Mineral Procesado Plan (t)] )
+
+    MEASURE _Medidas[Color Cumplimiento] =
+        SWITCH (
+            TRUE (),
+            [Cumplimiento Cu (%)] >= 1, "#2E7D32",
+            [Cumplimiento Cu (%)] >= 0.95, "#F9A825",
+            "#C62828"
+        )
+
+    MEASURE _Medidas[Horas Calendario] = SUM ( fact_equipos_diario[horas_calendario] )
+
+    MEASURE _Medidas[Horas Mantenimiento] = SUM ( fact_equipos_diario[horas_mant_programada] ) + SUM ( fact_equipos_diario[horas_mant_no_programada] )
+
+    MEASURE _Medidas[Horas Disponibles] = [Horas Calendario] - [Horas Mantenimiento]
+
+    MEASURE _Medidas[Horas Operativas] = SUM ( fact_equipos_diario[horas_operativas] )
+
+    MEASURE _Medidas[Disponibilidad Mecánica (%)] = DIVIDE ( [Horas Disponibles], [Horas Calendario] )
+
+    MEASURE _Medidas[Utilización (%)] = DIVIDE ( [Horas Operativas], [Horas Disponibles] )
+
+    MEASURE _Medidas[Rendimiento (%)] = DIVIDE ( SUM ( fact_equipos_diario[produccion_real] ), SUM ( fact_equipos_diario[produccion_nominal] ) )
+
+    MEASURE _Medidas[OEE (%)] = [Disponibilidad Mecánica (%)] * [Utilización (%)] * [Rendimiento (%)]
+
+    MEASURE _Medidas[N° Fallas] = SUM ( fact_equipos_diario[fallas] )
+
+    MEASURE _Medidas[MTBF (h)] = DIVIDE ( [Horas Operativas], [N° Fallas] )
+
+    MEASURE _Medidas[MTTR (h)] = DIVIDE ( SUM ( fact_equipos_diario[horas_mant_no_programada] ), [N° Fallas] )
+
+    MEASURE _Medidas[Precio Cu (US$/lb)] = CALCULATE ( AVERAGE ( fact_precios_metales[precio_usd] ), fact_precios_metales[metal] = "Cobre" )
+
+    MEASURE _Medidas[Precio Au (US$/oz)] = CALCULATE ( AVERAGE ( fact_precios_metales[precio_usd] ), fact_precios_metales[metal] = "Oro" )
+
+    MEASURE _Medidas[Precio Ag (US$/oz)] = CALCULATE ( AVERAGE ( fact_precios_metales[precio_usd] ), fact_precios_metales[metal] = "Plata" )
+
+    MEASURE _Medidas[Precio Zn (US$/lb)] = CALCULATE ( AVERAGE ( fact_precios_metales[precio_usd] ), fact_precios_metales[metal] = "Zinc" )
+
+    MEASURE _Medidas[Precio Metal Seleccionado] = AVERAGE ( fact_precios_metales[precio_usd] )
+
+    MEASURE _Medidas[Precio Mes Anterior] = CALCULATE ( [Precio Metal Seleccionado], DATEADD ( Calendario[Fecha], -1, MONTH ) )
+
+    MEASURE _Medidas[Variación Mensual (%)] = DIVIDE ( [Precio Metal Seleccionado] - [Precio Mes Anterior], [Precio Mes Anterior] )
+
+    MEASURE _Medidas[Precio Año Anterior] = CALCULATE ( [Precio Metal Seleccionado], SAMEPERIODLASTYEAR ( Calendario[Fecha] ) )
+
+    MEASURE _Medidas[Variación Anual (%)] = DIVIDE ( [Precio Metal Seleccionado] - [Precio Año Anterior], [Precio Año Anterior] )
+
+    MEASURE _Medidas[Costo Cash (US$)] = SUM ( fact_costos_mensual[costo_usd] )
+
+    MEASURE _Medidas[Costo C1 (US$/lb)] = DIVIDE ( [Costo Cash (US$)], [Cu Fino (t)] * 2204.62 )
+
+    MEASURE _Medidas[Costo por t Procesada (US$/t)] = DIVIDE ( [Costo Cash (US$)], [Mineral Procesado (t)] )
+
+    MEASURE _Medidas[Ingreso Estimado Cu (US$)] =
+        SUMX (
+            VALUES ( Calendario[Inicio de mes] ),
+            CALCULATE ( [Cu Fino (t)] * 2204.62 * [Precio Cu (US$/lb)] )
+        )
+
+    MEASURE _Medidas[Margen Cash (US$)] = [Ingreso Estimado Cu (US$)] - [Costo Cash (US$)]
+
+    MEASURE _Medidas[Margen Cash (%)] = DIVIDE ( [Margen Cash (US$)], [Ingreso Estimado Cu (US$)] )
+
+    MEASURE _Medidas[Margen por lb (US$/lb)] = [Precio Cu (US$/lb)] - [Costo C1 (US$/lb)]
+
+    MEASURE _Medidas[Horas Hombre] = SUM ( fact_seguridad_mensual[horas_hombre] )
+
+    MEASURE _Medidas[Incidentes Registrables] = SUM ( fact_seguridad_mensual[incidentes_registrables] )
+
+    MEASURE _Medidas[Lesiones con Tiempo Perdido] = SUM ( fact_seguridad_mensual[lesiones_tiempo_perdido] )
+
+    MEASURE _Medidas[TRIFR] = DIVIDE ( [Incidentes Registrables], [Horas Hombre] ) * 1000000
+
+    MEASURE _Medidas[LTIFR] = DIVIDE ( [Lesiones con Tiempo Perdido], [Horas Hombre] ) * 1000000
+
+    MEASURE _Medidas[Índice de Severidad] = DIVIDE ( SUM ( fact_seguridad_mensual[dias_perdidos] ), [Horas Hombre] ) * 1000000
+
+    MEASURE _Medidas[Cuasi Accidentes] = SUM ( fact_seguridad_mensual[cuasi_accidentes] )
+
+    MEASURE _Medidas[Agua Fresca (m3)] = SUM ( fact_ambiental_mensual[agua_fresca_m3] )
+
+    MEASURE _Medidas[Agua Recirculada (m3)] = SUM ( fact_ambiental_mensual[agua_recirculada_m3] )
+
+    MEASURE _Medidas[Recirculación de Agua (%)] = DIVIDE ( [Agua Recirculada (m3)], [Agua Fresca (m3)] + [Agua Recirculada (m3)] )
+
+    MEASURE _Medidas[Intensidad Hídrica (m3/t)] = DIVIDE ( [Agua Fresca (m3)], [Mineral Procesado (t)] )
+
+    MEASURE _Medidas[Energía (MWh)] = SUM ( fact_ambiental_mensual[energia_mwh] )
+
+    MEASURE _Medidas[Intensidad Energética (kWh/t)] = DIVIDE ( [Energía (MWh)] * 1000, [Mineral Procesado (t)] )
+
+    MEASURE _Medidas[Emisiones (tCO2e)] = SUM ( fact_ambiental_mensual[emisiones_tco2e] )
+
+    MEASURE _Medidas[Intensidad de Carbono (tCO2e/t Cu)] = DIVIDE ( [Emisiones (tCO2e)], [Cu Fino (t)] )
+
+    MEASURE _Medidas[Energía Renovable (%)] = AVERAGE ( fact_ambiental_mensual[energia_renovable_pct] ) / 100
+
+    MEASURE _Medidas[Valor Indicador] = AVERAGE ( fact_indicadores_pais[valor] )
+
+    MEASURE _Medidas[Valor Indicador Perú] = CALCULATE ( [Valor Indicador], fact_indicadores_pais[pais_iso3] = "PER" )
+
+    MEASURE _Medidas[Ranking Perú] =
+        VAR _Valor = [Valor Indicador Perú]
+        RETURN
+            IF (
+                NOT ISBLANK ( _Valor ),
+                COUNTROWS (
+                    FILTER (
+                        VALUES ( fact_indicadores_pais[pais_iso3] ),
+                        [Valor Indicador] > _Valor
+                    )
+                ) + 1
+            )
+
+    MEASURE _Medidas[Última Actualización Precios] = "Precios BCRP al " & FORMAT ( MAX ( fact_precios_metales[fecha] ), "mmmm yyyy", "es-PE" )
+
+    MEASURE _Medidas[Título Producción] =
+        "Producción de cobre fino: " & FORMAT ( [Cu Fino (t)] / 1000, "#,0.0" ) & " kt ("
+            & FORMAT ( [Cumplimiento Cu (%)], "0%" ) & " del plan)"
+
+EVALUATE
+    ROW (
+        "Cu Fino (t)", [Cu Fino (t)],
+        "Ley Cu (%)", [Ley Cu (%)],
+        "OEE (%)", [OEE (%)],
+        "Costo C1 (US$/lb)", [Costo C1 (US$/lb)]
+    )

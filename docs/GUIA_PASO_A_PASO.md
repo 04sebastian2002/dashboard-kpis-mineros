@@ -103,11 +103,17 @@ Es un **modelo estrella**: una buena palabra para mencionar en entrevistas.
 
 ## Parte 5. Medidas DAX (30 min)
 
-1. **Inicio > Especificar datos** > nombre `_Medidas` > **Cargar**.
-2. Selecciona `_Medidas` > **Inicio > Nueva medida** > pega una medida de
+1. **Inicio > Introducir datos** > nombre `_Medidas` > **Cargar**.
+2. **Opción rápida (recomendada): todas de una vez.**
+   - Abre la **Vista de consultas DAX** (4.º ícono de la barra izquierda).
+   - Pega todo `powerbi/dax/03_todas_las_medidas.dax`.
+   - Haz clic en el enlace **"Actualizar modelo: agregar 64 medidas nuevas"** que aparece sobre `DEFINE`.
+   - (Opcional) **Ejecutar** muestra una prueba con 4 KPIs.
+
+   **Opción manual:** selecciona `_Medidas` > **Inicio > Nueva medida** > pega una medida de
    `powerbi/dax/02_medidas.dax` > Enter. Repite con cada una.
 3. Formatos (Herramientas de medición):
-   - Las que terminan en `(%)` → **Porcentaje**, 1 decimal.
+   - Las que terminan en `(%)` → **Porcentaje**, 1 decimal (`Ley Cu (%)` con 2 decimales).
    - `(t)`, `(US$)`, `(m3)` → **Número entero** con separador de miles.
    - `US$/lb` → 2 decimales.
 4. Elimina la columna vacía de `_Medidas`: la tabla pasa a tener el ícono de calculadora.
