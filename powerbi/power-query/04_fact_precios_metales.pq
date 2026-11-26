@@ -19,7 +19,9 @@ let
     Fin = Text.From(Date.Year(DateTime.LocalNow())) & "-12",
     ConDatos = Table.AddColumn(Series, "datos", each fnBCRP([codigo], Inicio, Fin)),
     Expandido = Table.ExpandTableColumn(ConDatos, "datos", {"fecha", "valor", "serie_bcrp"}),
-    ConPrecio = Table.AddColumn(Expandido, "precio_usd", each [valor] * [factor_usd], type number),
+    // Al expandir se pierden los tipos: se vuelven a asignar
+    Tipado = Table.TransformColumnTypes(Expandido, {{"fecha", type date}, {"valor", type number}, {"serie_bcrp", type text}}),
+    ConPrecio = Table.AddColumn(Tipado, "precio_usd", each [valor] * [factor_usd], type number),
     Limpio = Table.SelectRows(ConPrecio, each [precio_usd] <> null),
     Final = Table.SelectColumns(Limpio, {"fecha", "metal", "unidad", "precio_usd", "serie_bcrp", "codigo"})
 in
