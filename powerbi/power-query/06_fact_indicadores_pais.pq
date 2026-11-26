@@ -12,6 +12,8 @@ let
     ),
     ConDatos = Table.AddColumn(Indicadores, "datos", each fnBancoMundial([codigo])),
     Expandido = Table.ExpandTableColumn(ConDatos, "datos", {"pais_iso3", "pais", "anio", "valor"}),
-    Final = Table.RemoveColumns(Expandido, {"codigo"})
+    // Al expandir se pierden los tipos: se vuelven a asignar
+    Tipado = Table.TransformColumnTypes(Expandido, {{"pais_iso3", type text}, {"pais", type text}, {"anio", Int64.Type}, {"valor", type number}}),
+    Final = Table.RemoveColumns(Tipado, {"codigo"})
 in
     Final
