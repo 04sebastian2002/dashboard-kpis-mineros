@@ -1,8 +1,8 @@
-// TODAS LAS MEDIDAS DE UNA VEZ (64 medidas). Archivo generado por scripts/generar_define_dax.py
+// TODAS LAS MEDIDAS DE UNA VEZ (67 medidas). Archivo generado por scripts/generar_define_dax.py
 // 1. Crea la tabla _Medidas (Inicio > Introducir datos > nombre _Medidas > Cargar).
 // 2. Abre la Vista de consultas DAX (4.º ícono de la barra izquierda).
 // 3. Pega TODO este archivo y haz clic en el enlace que aparece arriba de DEFINE:
-//    "Actualizar modelo: agregar 64 medidas nuevas".
+//    "Actualizar modelo: agregar 67 medidas nuevas".
 // 4. (Opcional) Clic en Ejecutar para ver una prueba con 4 KPIs.
 
 DEFINE
@@ -95,6 +95,39 @@ DEFINE
     MEASURE _Medidas[Precio Año Anterior] = CALCULATE ( [Precio Metal Seleccionado], SAMEPERIODLASTYEAR ( Calendario[Fecha] ) )
 
     MEASURE _Medidas[Variación Anual (%)] = DIVIDE ( [Precio Metal Seleccionado] - [Precio Año Anterior], [Precio Año Anterior] )
+
+    MEASURE _Medidas[Precio Último Mes] =
+        VAR _Ultimo = MAX ( fact_precios_metales[fecha] )
+        RETURN
+            CALCULATE (
+                [Precio Metal Seleccionado],
+                REMOVEFILTERS ( Calendario ),
+                fact_precios_metales[fecha] = _Ultimo
+            )
+
+    MEASURE _Medidas[Var. vs Mes Anterior (%)] =
+        VAR _Ultimo = MAX ( fact_precios_metales[fecha] )
+        VAR _Actual = [Precio Último Mes]
+        VAR _Anterior =
+            CALCULATE (
+                [Precio Metal Seleccionado],
+                REMOVEFILTERS ( Calendario ),
+                fact_precios_metales[fecha] = EDATE ( _Ultimo, -1 )
+            )
+        RETURN
+            DIVIDE ( _Actual - _Anterior, _Anterior )
+
+    MEASURE _Medidas[Var. vs Año Anterior (%)] =
+        VAR _Ultimo = MAX ( fact_precios_metales[fecha] )
+        VAR _Actual = [Precio Último Mes]
+        VAR _HaceUnAnio =
+            CALCULATE (
+                [Precio Metal Seleccionado],
+                REMOVEFILTERS ( Calendario ),
+                fact_precios_metales[fecha] = EDATE ( _Ultimo, -12 )
+            )
+        RETURN
+            DIVIDE ( _Actual - _HaceUnAnio, _HaceUnAnio )
 
     MEASURE _Medidas[Costo Cash (US$)] = SUM ( fact_costos_mensual[costo_usd] )
 

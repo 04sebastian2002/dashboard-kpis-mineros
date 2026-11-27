@@ -127,6 +127,40 @@ CALCULATE ( [Precio Metal Seleccionado], SAMEPERIODLASTYEAR ( Calendario[Fecha] 
 Variación Anual (%) =
 DIVIDE ( [Precio Metal Seleccionado] - [Precio Año Anterior], [Precio Año Anterior] )
 
+// Precio del último mes disponible (respeta el metal elegido)
+Precio Último Mes =
+VAR _Ultimo = MAX ( fact_precios_metales[fecha] )
+RETURN
+    CALCULATE (
+        [Precio Metal Seleccionado],
+        REMOVEFILTERS ( Calendario ),
+        fact_precios_metales[fecha] = _Ultimo
+    )
+
+Var. vs Mes Anterior (%) =
+VAR _Ultimo = MAX ( fact_precios_metales[fecha] )
+VAR _Actual = [Precio Último Mes]
+VAR _Anterior =
+    CALCULATE (
+        [Precio Metal Seleccionado],
+        REMOVEFILTERS ( Calendario ),
+        fact_precios_metales[fecha] = EDATE ( _Ultimo, -1 )
+    )
+RETURN
+    DIVIDE ( _Actual - _Anterior, _Anterior )
+
+Var. vs Año Anterior (%) =
+VAR _Ultimo = MAX ( fact_precios_metales[fecha] )
+VAR _Actual = [Precio Último Mes]
+VAR _HaceUnAnio =
+    CALCULATE (
+        [Precio Metal Seleccionado],
+        REMOVEFILTERS ( Calendario ),
+        fact_precios_metales[fecha] = EDATE ( _Ultimo, -12 )
+    )
+RETURN
+    DIVIDE ( _Actual - _HaceUnAnio, _HaceUnAnio )
+
 // =====================================================================
 // [Costos y finanzas]
 // =====================================================================

@@ -145,6 +145,18 @@ createOrReplace
 			formatString: 0.0%
 			displayFolder: Mercado
 
+		measure 'Precio Último Mes' = VAR _Ultimo = MAX ( fact_precios_metales[fecha] ) RETURN CALCULATE ( [Precio Metal Seleccionado], REMOVEFILTERS ( Calendario ), fact_precios_metales[fecha] = _Ultimo )
+			formatString: #,0.00
+			displayFolder: Mercado
+
+		measure 'Var. vs Mes Anterior (%)' = VAR _Ultimo = MAX ( fact_precios_metales[fecha] ) VAR _Actual = [Precio Último Mes] VAR _Anterior = CALCULATE ( [Precio Metal Seleccionado], REMOVEFILTERS ( Calendario ), fact_precios_metales[fecha] = EDATE ( _Ultimo, -1 ) ) RETURN DIVIDE ( _Actual - _Anterior, _Anterior )
+			formatString: 0.0%
+			displayFolder: Mercado
+
+		measure 'Var. vs Año Anterior (%)' = VAR _Ultimo = MAX ( fact_precios_metales[fecha] ) VAR _Actual = [Precio Último Mes] VAR _HaceUnAnio = CALCULATE ( [Precio Metal Seleccionado], REMOVEFILTERS ( Calendario ), fact_precios_metales[fecha] = EDATE ( _Ultimo, -12 ) ) RETURN DIVIDE ( _Actual - _HaceUnAnio, _HaceUnAnio )
+			formatString: 0.0%
+			displayFolder: Mercado
+
 		measure 'Costo Cash (US$)' = SUM ( fact_costos_mensual[costo_usd] )
 			formatString: #,0
 			displayFolder: Costos y finanzas
