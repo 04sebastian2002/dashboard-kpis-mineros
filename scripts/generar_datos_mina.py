@@ -74,8 +74,11 @@ def fact_produccion(zonas: pd.DataFrame) -> pd.DataFrame:
         mineral_proc = procesado_total * z.participacion * rng.normal(1, 0.05, n_dias)
         # La ley baja lentamente con la profundidad del tajo
         ley = z.ley_cu_base_pct * (1 - 0.06 * t / n_dias) * rng.normal(1, 0.06, n_dias)
+        # Recuperación: sube con la ley de cabeza (relación típica en flotación de cobre)
+        # más una variación mensual de la planta (dureza del mineral, reactivos, etc.)
+        efecto_mes = rng.normal(0, 0.8, 12 * 5)[(fechas.year.to_numpy() - 2023) * 12 + mes - 1]
         recuperacion = np.clip(
-            87.5 + 2.5 * (ley - 0.5) * 10 * 0.1 + rng.normal(0, 1.2, n_dias), 80, 93
+            87.5 + 25 * (ley - 0.54) + efecto_mes + rng.normal(0, 1.0, n_dias), 80, 93
         )
         ley_mo = np.clip(rng.normal(0.018, 0.003, n_dias), 0.008, 0.03)
         ratio_desmonte = rng.normal(2.3, 0.2, n_dias)  # t desmonte / t mineral
